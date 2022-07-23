@@ -1,0 +1,158 @@
+* {
+  position: relative;
+  box-sizing: border-box;
+  line-height: 1.45em;
+}
+
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote,
+pre, abbr, address, code, del, em, img, ins, kbd, q, samp, small,
+strong, sub, sup, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details,
+figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  font-weight: 400;
+  vertical-align: baseline;
+  background: transparent;
+  color: #333;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  line-height: 1;
+  overflow-wrap: break-word;
+  word-break: break-all;
+  background-color: #f0f0f0;
+}
+
+article, aside, details, figcaption, figure, footer, header, menu, nav, section {
+  display: block;
+}
+
+nav ul {
+  list-style: none;
+}
+
+a {
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+  text-decoration: none;
+  color: inherit;
+  position: static;
+}
+
+del {
+  text-decoration: line-through;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+input, select {
+  vertical-align: middle;
+}
+
+input[type=submit], button {
+  border: none;
+}
+
+svg {
+  max-width: 100%;
+  max-height: 100%;
+  overflow: visible;
+}
+
+.svg-group {
+  display: none;
+}
+
+p {
+  max-width: 100%;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  image-rendering: -webkit-optimize-contrast;
+}
+img.alignleft {
+  display: block;
+  margin-left: auto;
+}
+img.aligncenter {
+  display: block;
+  margin: 0 auto;
+}
+img.alignright {
+  display: block;
+  margin-right: auto;
+}
+img.alignnone {
+  display: inline-block;
+}
+
+.twofact-page {
+  width: 32rem;
+  height: 100vh;
+  margin: auto;
+  padding: 25vh 0 0;
+}
+.twofact-page__title {
+  font-size: 3.2rem;
+  font-weight: bold;
+  text-align: center;
+}
+.twofact-page__content {
+  width: 100%;
+  margin-top: 4rem;
+  padding: 2.6rem 2.4rem 3.2rem;
+  background-color: #fff;
+  border: 0.1rem solid #c3c4c7;
+  box-shadow: 0 0.1rem 0.3rem rgba(0, 0, 0, 0.14);
+}
+.twofact-page__label {
+  font-size: 1.6rem;
+}
+.twofact-page__input {
+  width: 100%;
+  height: 4rem;
+  font-size: 1.6rem;
+  letter-spacing: 1em;
+  padding: 0 5.8rem;
+  overflow: hidden;
+}
+.twofact-page__link {
+  font-size: 1.4rem;
+  margin-top: 0.8rem;
+}
+.twofact-page__copy {
+  font-size: 1.4rem;
+  text-align: right;
+}
+.twofact-page a {
+  transition: 0.2s color;
+}
+.twofact-page a:hover {
+  color: #135e96;
+}
+.twofact-page__error {
+  font-size: 1.4rem;
+  color: #ff3333;
+  width: 100%;
+  background-color: rgba(255, 0, 0, 0.1);
+  text-align: center;
+  padding: 2.4rem 0 2.6rem;
+  position: absolute;
+  top: 0;
+}/*# sourceMappingURL=twofact-page.css.map */
