@@ -11,6 +11,8 @@ class Two_Fact_Page_Routing
     add_filter( 'query_vars', array( __CLASS__, 'two_fact_routing_vars' ) );
 
     add_action( 'template_redirect', array( __CLASS__, 'google_auth_redirect' ) );
+
+    register_activation_hook( PLUGIN_FILE, array( __CLASS__, 'flush_rewrite_twofact_rules' ) );
   }
 
   public static function google_auth_two_fact_rule ( $rules )
@@ -35,6 +37,11 @@ class Two_Fact_Page_Routing
       include_once( PLUGIN_PATH . '/inc/related_twofact_page/theme.php' );
       exit;
     }
+  }
+
+  public function flush_rewrite_twofact_rules ()
+  {
+    flush_rewrite_rules();
   }
 }
 

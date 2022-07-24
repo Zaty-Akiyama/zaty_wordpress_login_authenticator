@@ -1,6 +1,5 @@
 <?php
 require_once PLUGIN_PATH . '/vendor/autoload.php';
-include_once PLUGIN_PATH . "/vendor/googleAuthenticator.php";
 
 use Endroid\QrCode\Color\Color;
 use Endroid\QrCode\Encoding\Encoding;
@@ -8,6 +7,7 @@ use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelLow;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
 use Endroid\QrCode\Writer\PngWriter;
+use PHPGangsta\GoogleAuthenticator;
 
 if ( !class_exists( "Append_User_Profile" ) ) :
 

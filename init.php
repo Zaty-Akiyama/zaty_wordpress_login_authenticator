@@ -34,6 +34,7 @@ class ZATY_Login_Security
   private static function define_constants ()
   {
 
+    define( 'PLUGIN_FILE', __FILE__ );
     define( 'PLUGIN_PATH', dirname( __FILE__ ) );
     define( 'PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 

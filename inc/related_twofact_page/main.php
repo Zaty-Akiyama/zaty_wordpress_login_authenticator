@@ -1,5 +1,7 @@
 <?php
-include_once PLUGIN_PATH . "/vendor/googleAuthenticator.php";
+require_once PLUGIN_PATH . '/vendor/autoload.php';
+use PHPGangsta\GoogleAuthenticator;
+
 
 if( !class_exists( "Two_fact_login_page" ) ):
 
