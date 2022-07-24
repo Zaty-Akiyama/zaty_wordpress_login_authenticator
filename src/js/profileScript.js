@@ -31,7 +31,7 @@
     const dummyImage = document.querySelector('.jsDummyImage')
     const truthText = document.querySelector('.jsTruthText')
     const dummyText = document.querySelector('.jsDummyText')
-
+    const qrActivateCheckbox = document.querySelector('#qrActivateCheckbox')
 
     qrSwitchWrapper.addEventListener( 'click', e => {
       if( !e.target.classList.contains( 'qr-area__checkbox' ) ) return
@@ -62,6 +62,19 @@
         post( '#qrArea', { operation: 'reset' } )
       }
     } )
+
+    qrActivateCheckbox.addEventListener( 'change', e => {
+      const value = e.target.checked
+
+      const ifActivated = value ? '有効化' : '無効化'
+
+      const confirm = window.confirm('二段階認証を' + ifActivated + 'します。')
+
+      if( confirm )
+      {
+        post( '#qrArea', { activate: value } )
+      }
+    })
 
   } else 
     {

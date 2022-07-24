@@ -28,7 +28,7 @@ class Two_fact_login_page
     add_action( 'wp_login', array( __CLASS__, 'login_redirect_twofact_page' ), 1, 2 );
     add_action( 'wp_logout', array( __CLASS__, 'reset_auth_status_at_logout' ), 1, 1 );
 
-    add_action( 'admin_init', array( __CLASS__, 'check_verified_google_auth' ) );
+    add_action( 'admin_init', array( __CLASS__, 'check_verified_google_auth' ), 0 );
   }
 
   // ログイン完了後に二段階認証ページにリダイレクトする
@@ -39,17 +39,19 @@ class Two_fact_login_page
     $author_has_secret_code = get_user_option( 'authenticator_code', $id );
 
     update_user_option( $id, 'google_auth_status', 'logined' );
+    wp_redirect( home_url(). '/falsdkjf' );
 
-    if( $author_has_secret_code )
+    $activate_google_auth = get_user_option( 'google_authenticator_activate', $id );
+    if ( $activate_google_auth === 'false' )
     {
-
-      wp_safe_redirect( home_url() . '/loginAuthenticator/google_authenticator' );
-    } else
+      update_user_option( $id, 'google_auth_status', 'verified' );
+    }else if( $author_has_secret_code )
     {
-      wp_safe_redirect( home_url() );
+      wp_redirect( home_url() . '/loginAuthenticator/google_authenticator' );
+      exit();
     }
-
-    exit;
+    wp_redirect( home_url() );
+    exit();
   }
 
   // 二段階認証画面はログイン後にしかアクセスできない
@@ -63,8 +65,9 @@ class Two_fact_login_page
     $id = wp_get_current_user()->ID;
 
     $google_auth_status = get_user_option( 'google_auth_status', $id );
+    $activate_google_auth = get_user_option( 'google_authenticator_activate', $id );
 
-    if( $google_auth_status !== 'logined' )
+    if( $google_auth_status !== 'logined' || $activate_google_auth === 'false' )
     {
       wp_safe_redirect( home_url() );
     }
@@ -90,6 +93,7 @@ class Two_fact_login_page
 
   public static function reset_auth_status_at_logout ( $id )
   {
+    delete_user_option( 'google_authenticator_activate', $id );
     delete_user_option( 'google_auth_status', $id );
   }
 
@@ -100,8 +104,9 @@ class Two_fact_login_page
 
     $author_has_secret_code = get_user_option( 'authenticator_code', $id );
     $google_auth_status = get_user_option( 'google_auth_status', $id );
+    $activate_google_auth = get_user_option( 'google_authenticator_activate', $id );
 
-    if( $author_has_secret_code && $google_auth_status !== 'verified' )
+    if( $author_has_secret_code && $google_auth_status !== 'verified' && $activate_google_auth === 'true' )
     {
       wp_logout();
     }

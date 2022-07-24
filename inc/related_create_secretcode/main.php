@@ -36,7 +36,22 @@ class Append_User_Profile
   {
     $id = wp_get_current_user()->ID;
     $update = update_user_option( $id, 'authenticator_code', $code );
+
+    update_user_option( $id, 'google_auth_status', 'verified' );
+
     return $update;
+  }
+  
+  private static function get_user_activate ()
+  {
+    $id = wp_get_current_user()->ID;
+    return get_user_option( 'google_authenticator_activate', $id );
+  }
+
+  private static function update_user_activate ( $boolean )
+  {
+    $id = wp_get_current_user()->ID;
+    return update_user_option( $id, 'google_authenticator_activate', $boolean );
   }
 
   private static function get_qr_image_src ( $uri )
@@ -178,15 +193,32 @@ class Append_User_Profile
       {
         cursor: pointer;
       }
+      .qr-area__reset-button-area
+      {
+        text-align: center;
+        margin: 0;
+      }
       .qr-area__reset-button
       {
         color: #ff0000;
         text-decoration: underline;
-        text-align: center;
-        margin: 0;
+      }
+      .qr-area__reset-button:hover
+      {
+        color: #aa0000;
+      }
+      .qr-area__activate-area
+      {
+        margin-top: 10px;
+      }
+      .qr-area__activate-input
+      {
+        position: relative;
+        top: 1px;
       }
     </style>
     <?php
+    // シークレットコードの生成やリセットの処理
       $operation = $_POST['operation'];
       if( $operation === 'generate' )
       {
@@ -194,6 +226,7 @@ class Append_User_Profile
         self::update_secret_code( $secret_code );
       } else if( $operation === 'reset' )
       {
+        self::update_user_activate(null);
         self::update_secret_code('');
       }
       $is_generated_code = self::is_generated_code();
@@ -208,11 +241,30 @@ class Append_User_Profile
       $no_image_src = PLUGIN_URL . "/src/image/nodisplay.jpg"
     ?>
 
+    <?php
+    // 二段階認証の有効化無効化の処理
+      $activate = $_POST['activate'];
+      $activate_option = self::get_user_activate();
+
+      if( $activate !== null)
+      {
+        $activate_check = $activate === 'true' ? 'checked' : '';
+        self::update_user_activate( $activate );
+      }else if( $activate_option )
+      {
+        $activate_check = $activate_option === 'true' ? 'checked' : '';
+      }else
+      {
+        $activate_check = 'checked';
+        self::update_user_activate( 'true' );
+      }
+    ?>
+
     <div class="qr-area" id="qrArea">
       <div class="qr-area__generator">
 
         <?php if( $is_generated_code ): ?>
-        <p class="qr-area__reset-button">リセット</p>
+        <p class="qr-area__reset-button-area"><span class="qr-area__reset-button">リセット</span></p>
         <?php else : ?>
         <button class="qr-area__generate-button">
           シークレットコードを生成
@@ -235,6 +287,11 @@ class Append_User_Profile
           <label class="qr-area__switch" for="qrCheckBox"></label>
           <input id="qrCheckBox" class="qr-area__checkbox" type="checkbox">
         </div>
+      </div>
+      <div class="qr-area__activate-area">
+        <label for="qrActivateCheckbox">二段階認証を有効化する
+        </label>
+        <input class="qr-area__activate-input" id="qrActivateCheckbox" type="checkbox" <?php echo $activate_check; ?>>
       </div>
       <?php endif; ?>
 
