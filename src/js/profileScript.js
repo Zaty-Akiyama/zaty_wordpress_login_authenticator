@@ -25,13 +25,17 @@
   const qrSwitch = document.querySelector('.qr-area__switch')
   const qrGenerateButton = document.querySelector('.qr-area__generate-button')
   const qrResetButton = document.querySelector('.qr-area__reset-button')
+
+  const qrAnotherUser = document.querySelector('.qr-area__another-user')
+  const qrActivateCheckbox = document.querySelector('#qrActivateCheckbox')
+
+  
   if ( qrSwitchWrapper )
   {
     const truthImage = document.querySelector('.jsTruthImage')
     const dummyImage = document.querySelector('.jsDummyImage')
     const truthText = document.querySelector('.jsTruthText')
     const dummyText = document.querySelector('.jsDummyText')
-    const qrActivateCheckbox = document.querySelector('#qrActivateCheckbox')
 
     qrSwitchWrapper.addEventListener( 'click', e => {
       if( !e.target.classList.contains( 'qr-area__checkbox' ) ) return
@@ -63,6 +67,16 @@
       }
     } )
 
+  } else if ( !qrAnotherUser )
+  {
+    qrGenerateButton.addEventListener( 'click', e => {
+      e.preventDefault()
+      post( '#qrArea', { operation: 'generate' } )
+    } )
+  }
+
+  if( qrActivateCheckbox && ( qrSwitchWrapper || qrAnotherUser ) )
+  {
     qrActivateCheckbox.addEventListener( 'change', e => {
       const value = e.target.checked
 
@@ -75,13 +89,6 @@
         post( '#qrArea', { activate: value } )
       }
     })
-
-  } else 
-    {
-      qrGenerateButton.addEventListener( 'click', e => {
-        e.preventDefault()
-        post( '#qrArea', { operation: 'generate' } )
-      } )
-    }
   }
-)()
+  
+} )()
