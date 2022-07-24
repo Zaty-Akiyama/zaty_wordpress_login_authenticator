@@ -5,7 +5,7 @@
  * Plugin name: Zaty Login Security
  * 
  * Description: WordPressのログインセキュリティを高めるプラグインです。
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: ZATY
  * Author URI: https://zaty.jp
  * 

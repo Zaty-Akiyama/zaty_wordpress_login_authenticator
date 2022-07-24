@@ -69,6 +69,5 @@ class Append_User_Profile
     include( PLUGIN_PATH . '/inc/related_create_secretcode/append_info_in_another_user_profile.php' );
   }
 
-
 }
 endif;
