@@ -9,7 +9,35 @@ class Two_fact_login_page
 {
   public function __construct ()
   {
+    self::ip_control();
+
     self::init();
+  }
+
+  public function ip_control ()
+  {
+    include_once( PLUGIN_PATH . '/inc/IP_Control/ip_control.php' );
+
+    $ip_setting = array(
+      'id' => 'twofactAuth',
+      'server' => $_SERVER,
+      'options' => array(
+        'time_interval' => 5*60,
+        'mistake_count' => 3
+      )
+    );
+    $this->ip_control = new IP_Control( $ip_setting );
+
+    if( $this->ip_control->ip_lock_check() )
+    {
+      add_action( 'twofact_page_init', array( __CLASS__, 'block_ip_theme' ), 1 );
+    }
+  }
+
+  public static function block_ip_theme ()
+  {
+    include_once( PLUGIN_PATH . '/inc/related_twofact_page/blocked_theme.php' );
+    exit;
   }
 
   private static function init ()
@@ -69,6 +97,7 @@ class Two_fact_login_page
 
     if( $google_auth_status !== 'logined' || $activate_google_auth === 'false' )
     {
+      $this->ip_control->ip_accomplished();
       wp_safe_redirect( home_url() );
     }
   }

@@ -4,13 +4,28 @@
   $fact_post = $_POST["twofact"];
   $send_value = '';
   $verified = false;
+
+  include_once( PLUGIN_PATH . '/inc/IP_Control/ip_control.php' );
+
+  $ip_setting = array(
+    'id' => 'twofactAuth',
+    'server' => $_SERVER,
+    'options' => array(
+      'time_interval' => 5*60,
+      'mistake_count' => 3
+    )
+  );
+  $ip_control = new IP_Control( $ip_setting );
+
   if( $fact_post !== null )
   {
     $send_value = $fact_post;
+    $ip_control->ip_recording();
     $verified = apply_filters( 'twofact_check_number', false , $send_value );
   }
   if( $verified )
   {
+    $ip_control->ip_accomplished();
     wp_safe_redirect( home_url() . '/wp-admin/about.php' );
   }
 ?>
